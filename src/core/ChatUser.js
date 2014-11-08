@@ -1,10 +1,10 @@
-function ChatUser() {
+function ChatUser( userId ) {
   /**
    * Unique ID of the user sending the message
    *
    * @type String
    */
-  this.userId = null;
+  this.id = userId;
 }
 
 module.exports = ChatUser;

@@ -1,4 +1,5 @@
 var ChatRoom = require( './ChatRoom' );
+var ChatUser = require( './ChatUser' );
 var PlatformAdapter = require( './PlatformAdapter' );
 var Utils = require( './Utils' );
 
@@ -21,12 +22,47 @@ function Chat( adapter ) {
   this._adapter = adapter;
 
   /**
+   * The default room for the chat
+   * @type ChatRoom
+   */
+  this.defaultRoom = new ChatRoom();
+
+  /**
+   * The current user in the chat.
+   * @type ChatUser
+   */
+  this.user = null;
+
+  /**
    * Chat rooms that are available.
    * A map of chat room name to ChatRoom object.
    * @type Map
    */
   this.rooms = {};
 }
+
+/**
+ * Set the current user for the chat engine.
+ *
+ * @param {ChatUser} user
+ *    The current user
+ */
+Chat.prototype.setUser = function( user ) {
+  if( !user.id ) {
+    throw new Error( 'The "user" must implement the ChatUser interface' );
+  }
+  this.user = user;
+};
+
+/**
+ * Send a message to the default chat room.
+ *
+ * @param {ChatMessage} message
+ *    The message to send to the default chat room
+ */
+Chat.prototype.send = function( message ) {
+  this.defaultRoom.send( message );
+};
 
 /**
  * Add a new room to the chat.

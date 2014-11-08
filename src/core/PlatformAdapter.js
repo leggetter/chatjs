@@ -7,8 +7,9 @@ function PlatformAdapter() {
 
 /**
  * Add a room to the chat.
- * In an implementation this may subscribe to a channel with
- * the name of the room.
+ * In an implementation this may retrieve information about the channel.
+ * Some implementations may subscribe to a channel, but it may be more efficient
+ * to only subscribe if the current user joins a room.
  *
  * @param {ChatRoom} room
  *    The room to add to the chat.

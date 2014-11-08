@@ -3,14 +3,14 @@ var Utils = {};
 Utils.fulfills = function(instance, protocol) {
 
   var protocolIsConstructor = typeof protocol === 'function';
-  // if (protocolIsConstructor && isA(instance, protocol)) {
-  // 	return true;
-  // }
-
   var requirement = protocolIsConstructor ? protocol.prototype : protocol;
   for (var item in requirement) {
   	var type = typeof instance[item];
   	var required = requirement[item];
+
+    // console.log( 'item', item );
+    // console.log( 'type', type );
+    // console.log( 'required', required );
 
   	if (required === Number) {
   		if (type !== 'number') {

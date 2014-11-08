@@ -24,4 +24,14 @@ function ChatRoom( name ) {
 ChatRoom.prototype.send = function( message ) {
 };
 
+/**
+ * Adds a user to a room.
+ */
+ChatRoom.prototype.join = function( user ) {
+  if( this.users[ user.id ] !== undefined ) {
+    throw new Error( 'A user with the id "' + user.id + '" is already in the room. Cannot join the room twice.' );
+  }
+  this.users[ user.id ] = user;
+};
+
 module.exports = ChatRoom;
