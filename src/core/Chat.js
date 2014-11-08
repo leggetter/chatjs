@@ -1,6 +1,25 @@
-var ChatRoom = require( './ChatRoom.js' );
+var ChatRoom = require( './ChatRoom' );
+var PlatformAdapter = require( './PlatformAdapter' );
+var Utils = require( './Utils' );
 
-function Chat() {
+/**
+ * A chat engine.
+ *
+ * @constructor
+ *
+ * @param {PlatformAdapter} adapter
+ *    The hooks the core functionality up to a specific platform implemenation.
+ */
+function Chat( adapter ) {
+  if( !Utils.fulfills( adapter, PlatformAdapter ) ) {
+    throw new Error( 'The "adapter" must implement the PlatformAdapter interface' );
+  }
+
+  /**
+   * @type PlatformAdapter
+   */
+  this._adapter = adapter;
+
   /**
    * Chat rooms that are available.
    * A map of chat room name to ChatRoom object.
@@ -21,6 +40,9 @@ Chat.prototype.addRoom = function( name ) {
 
   var room = new ChatRoom( name );
   this.rooms[ name ] = room;
+
+  this._adapter.addRoom( room );
+
   return room;
 };
 

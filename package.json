@@ -1,7 +1,7 @@
 {
   "name": "chatjs",
   "version": "0.0.1",
-  "description": "A platform independent JavaScript chat engine",
+  "description": "A platform and UI framework independent JavaScript chat engine",
   "main": "index.js",
   "directories": {
     "test": "tests"

@@ -1,4 +1,4 @@
-var ChatRoom = require( '../src/ChatRoom.js' );
+var ChatRoom = require( '../../src/core/ChatRoom.js' );
 
 describe( 'ChatRoom', function() {
 
