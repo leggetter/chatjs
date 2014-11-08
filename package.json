@@ -1,0 +1,28 @@
+{
+  "name": "chatjs",
+  "version": "0.0.1",
+  "description": "A platform independent JavaScript chat engine",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "JavaScript"
+  ],
+  "author": "Phil Leggetter",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "~6.2.0",
+    "karma": "~0.12.24",
+    "karma-jasmine": "~0.2.3",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-chrome-launcher": "~0.1.5",
+    "karma-bro": "~0.10.0",
+    "karma-growl-reporter": "~0.1.1",
+    "karma-osx-reporter": "~0.1.0"
+  }
+}
