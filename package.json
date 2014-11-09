@@ -26,7 +26,8 @@
     "gulp": "~3.8.10",
     "gulp-browserify": "~0.5.0",
     "gulp-connect": "~2.2.0",
-    "gulp-watch": "~1.1.0"
+    "gulp-watch": "~1.1.0",
+    "topiarist": "~0.1.1"
   },
   "dependencies": {
     "typester": "~0.4.1",
