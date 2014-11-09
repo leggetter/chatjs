@@ -29,9 +29,11 @@ PlatformAdapter.prototype.addRoom = function( room ) {};
  * Send a message.
  * In an implementation this may trigger or publish a message on a channel.
  *
+ * @param {ChatRoom} room
+ *    The room that a message should be sent to.
  * @param {ChatMessage} message
  *    The message to send.
  */
-PlatformAdapter.prototype.send = function( message ) {};
+PlatformAdapter.prototype.send = function( room, message ) {};
 
 module.exports = PlatformAdapter;

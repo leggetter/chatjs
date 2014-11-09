@@ -25,7 +25,7 @@ describe( 'ChatRoom', function() {
 
     room.send( message );
 
-    expect( emptyAdapter.send ).toHaveBeenCalledWith( message );
+    expect( emptyAdapter.send ).toHaveBeenCalledWith( room, message );
   } );
 
   it( 'should ensure a message provides the required properties', function() {

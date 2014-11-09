@@ -41,7 +41,7 @@ ChatRoom.prototype.send = function( message ) {
   using( arguments )
     .verify( 'message' ).fulfills( ChatMessage );
 
-  this._adapter.send( message );
+  this._adapter.send( this, message );
 };
 
 /**
