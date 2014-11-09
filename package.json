@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "typester": "~0.4.1",
-    "js-base64": "~2.1.5"
+    "js-base64": "~2.1.5",
+    "emitr": "0.0.3"
   }
 }

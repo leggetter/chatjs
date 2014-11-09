@@ -1,5 +1,7 @@
 var PlatformAdapter = require( './PlatformAdapter' );
 var ChatMessage = require( './ChatMessage' );
+
+var emitr = require( 'emitr' );
 var using = require( 'typester' ).using;
 
 /**
@@ -30,7 +32,18 @@ function ChatRoom( name, adapter ) {
    * @private
    */
   this._adapter = adapter;
+
+  /**
+   * @private
+   */
+  this._emitr = new emitr();
 }
+
+/**
+ * New message recieved event name.
+ * @type String
+ */
+ChatRoom.MESSAGE_RECEIVED_EVENT = 'new-message';
 
 /**
  * Send the message.
@@ -51,7 +64,25 @@ ChatRoom.prototype.send = function( message ) {
  *    The incoming message.
  */
 ChatRoom.prototype.receive = function( message ) {
+  // TODO: update message collection
+  this._emitr.trigger( ChatRoom.MESSAGE_RECEIVED_EVENT, message );
+};
 
+/**
+ * Bind to chat room events.
+ *
+ * @param {String} eventName
+ *    The name of the event to bind to.
+ * @param {Function} callback
+ *    The callback to be invoked when the event is triggered.
+ * @param {Object} context
+ *    The context to apply to the callback. For example, for maintaining the
+ *    context of `this`.
+ *
+ * @fires ChatRoom#MESSAGE_RECEIVED_EVENT
+ */
+ChatRoom.prototype.on = function( eventName, callback, context ) {
+  this._emitr.on( eventName, callback, context );
 };
 
 /**

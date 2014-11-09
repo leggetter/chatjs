@@ -73,13 +73,11 @@ Chat.prototype.addRoom = function( name ) {
   return room;
 };
 
+/**
+ * @see ChatRoom#on
+ */
+Chat.prototype.on = function( eventName, callback, context ) {
+  this.defaultRoom.on( eventName, callback, context );
+};
+
 module.exports = Chat;
-
-
-
-
-
-// on( 'new-message' )
-// on( 'new')
-
-// addMessageListener( listener )

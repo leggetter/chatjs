@@ -66,4 +66,16 @@ describe( 'ChatRoom', function() {
     expect( addUserAgain ).toThrow();
   } );
 
+  it( 'should trigger a new message event when a message is received', function() {
+    var room = new ChatRoom( 'test-room', emptyAdapter );
+
+    var receivedMessage = null;
+    room.on( ChatRoom.MESSAGE_RECEIVED_EVENT, function( msg ) {
+      receivedMessage = msg;
+    } );
+
+    var message = new ChatMessage( 'test-user', 'some-text' );
+    room.send( message );
+  } );
+
 } );

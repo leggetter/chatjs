@@ -100,6 +100,20 @@ describe( 'Chat should offer ChatRoom functionality', function() {
     expect( room.send ).toHaveBeenCalledWith( message );
   } );
 
+  it( 'should trigger a new message event when the default room receives a message', function() {
+    var chat = new Chat( user, emptyAdapter );
+    var message = new ChatMessage( 'test-user', 'test message' );
+
+    var receivedMessage = null;
+    chat.on( ChatRoom.MESSAGE_RECEIVED_EVENT, function( msg ) {
+      receivedMessage = msg;
+    } );
+
+    chat.defaultRoom.receive( message );
+
+    expect( receivedMessage ).toBe( message );
+  } );
+
   // it( 'should be possible for a user to join the chat', function() {
   //   var chat = new Chat( emptyAdapter );
   //   var user = new ChatUser( 'test-user' );
