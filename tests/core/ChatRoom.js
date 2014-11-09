@@ -1,14 +1,14 @@
 var ChatRoom = require( '../../src/core/ChatRoom.js' );
 var ChatUser = require( '../../src/core/ChatUser' );
 var ChatMessage = require( '../../src/core/ChatMessage' );
-var NullChatAdapter = require( '../../src/platforms/null/NullChatAdapter' );
+var PlatformAdapter = require( '../../src/core/PlatformAdapter' );
 
 describe( 'ChatRoom', function() {
 
   var emptyAdapter = null;
 
   beforeEach( function() {
-    emptyAdapter = new NullChatAdapter();
+    emptyAdapter = new PlatformAdapter();
   } );
 
   it( 'should be possible to construct a ChatRoom with a name', function() {

@@ -45,6 +45,16 @@ ChatRoom.prototype.send = function( message ) {
 };
 
 /**
+ * Called when a new message is recieved.
+ *
+ * @param {ChatMessage} message
+ *    The incoming message.
+ */
+ChatRoom.prototype.receive = function( message ) {
+
+};
+
+/**
  * Adds a user to a room.
  */
 ChatRoom.prototype.join = function( user ) {

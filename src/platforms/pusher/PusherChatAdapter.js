@@ -1,9 +1,10 @@
 var Base64 = require( 'js-base64' ).Base64;
 var using = require( 'typester' ).using;
+
 var ChatRoom = require( '../../core/ChatRoom' );
 var ChatMessage = require( '../../core/ChatMessage' );
 
-var NEW_MESSAGE_EVENT = 'client-new-message';
+var PUSHER_NEW_MESSAGE_EVENT = 'client-new-message';
 
 /**
  * Pusher adapter for the chat engine.
@@ -21,7 +22,7 @@ function PusherChatAdapter( pusher ) {
  * Event name for new messages.
  * @type String
  */
-PusherChatAdapter.NEW_MESSAGE_EVENT = NEW_MESSAGE_EVENT;
+PusherChatAdapter.PUSHER_NEW_MESSAGE_EVENT = PUSHER_NEW_MESSAGE_EVENT;
 
 PusherChatAdapter.prototype.setUser = function( user ) {
   this.user = user;
@@ -44,6 +45,10 @@ PusherChatAdapter.prototype.addRoom = function( room ) {
   var encodedRoomName = roomNameToValidChannelName( room.name );
   var channel = this._pusher.subscribe( encodedRoomName );
   this._roomChannels[ room.name ] = channel;
+
+  channel.bind( PUSHER_NEW_MESSAGE_EVENT, function( message ) {
+    this._newMessage( room, message );
+  }, this );
 };
 
 PusherChatAdapter.prototype.send = function( room, message ) {
@@ -52,9 +57,21 @@ PusherChatAdapter.prototype.send = function( room, message ) {
     .verify( 'message' ).fulfills( ChatMessage );
 
   var roomChannel = this._roomChannels[ room.name ];
-  roomChannel.trigger( NEW_MESSAGE_EVENT, message );
+  roomChannel.trigger( PUSHER_NEW_MESSAGE_EVENT, message );
+
+  // Pusher does not send client events to the originator of the event.
+  // Trigger the event as if it has been received.
+  this._newMessage( room, message );
 };
 
+/**
+ * @private
+ */
+PusherChatAdapter.prototype._newMessage = function( room, message ) {
+  room.receive( message );
+};
+
+// Helper functions
 function roomNameToValidChannelName( name ) {
   // ensure any name is allowed as a channel
   // TODO: what about + sign?
