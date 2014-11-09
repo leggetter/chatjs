@@ -1,10 +1,15 @@
+var PlatformAdapter = require( './PlatformAdapter' );
 var ChatMessage = require( './ChatMessage' );
-var using = require('typester').using;
+var using = require( 'typester' ).using;
 
 /**
  * A chat room.
  */
 function ChatRoom( name, adapter ) {
+  using( arguments )
+    .verify( 'name' ).fulfills( String )
+    .verify( 'adapter' ).fulfills( PlatformAdapter );
+
   /**
    * The name of the room
    * @type String

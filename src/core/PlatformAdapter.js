@@ -6,6 +6,15 @@ function PlatformAdapter() {
 }
 
 /**
+ * Set the current user for the chat.
+ * An implementation should use this for presence information.
+ *
+ * @param {ChatUser} user
+ *   The chat user.
+ */
+PlatformAdapter.prototype.setUser = function( user ) {};
+
+/**
  * Add a room to the chat.
  * In an implementation this may retrieve information about the channel.
  * Some implementations may subscribe to a channel, but it may be more efficient

@@ -6,7 +6,11 @@ gulp.task( 'server', function() {
   connect.server();
 } ) ;
 
-gulp.task( 'default', function() {
+gulp.task( 'watch', function() {
+  gulp.watch( [ 'src/**/*.js' ], ['build'] );
+} );
+
+gulp.task( 'build', function() {
   gulp.src( 'src/core/chatjs.js' )
     .pipe( browserify( {
       debug: !gulp.env.production,
@@ -21,6 +25,13 @@ gulp.task( 'default', function() {
     } ) )
     .pipe( gulp.dest( 'build/' ) );
 
+  gulp.src( 'src/platforms/pusher/*.js' )
+    .pipe( browserify( {
+      debug: !gulp.env.production,
+      standalone: 'PusherChatAdapter'
+    } ) )
+    .pipe( gulp.dest( 'build/' ) );
+
   gulp.src( 'src/ui-frameworks/console/*.js' )
     .pipe( browserify( {
       debug: !gulp.env.production,
@@ -28,3 +39,5 @@ gulp.task( 'default', function() {
     } ) )
     .pipe( gulp.dest( 'build/' ) );
 });
+
+gulp.task( 'default', [ 'build', 'watch', 'server' ] );

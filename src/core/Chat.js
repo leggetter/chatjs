@@ -8,12 +8,21 @@ var using = require( 'typester' ).using;
  *
  * @constructor
  *
+ * @param {ChatUser} user
+ *    The user of the chat.
  * @param {PlatformAdapter} adapter
  *    The hooks the core functionality up to a specific platform implemenation.
  */
-function Chat( adapter ) {
+function Chat( user, adapter ) {
   using( arguments )
+    .verify( 'user' ).fulfills( ChatUser )
     .verify( 'adapter' ).fulfills( PlatformAdapter );
+
+  /**
+   * The current user in the chat.
+   * @type ChatUser
+   */
+  this.user = user;
 
   /**
    * @type PlatformAdapter
@@ -21,37 +30,20 @@ function Chat( adapter ) {
   this._adapter = adapter;
 
   /**
-   * The default room for the chat
-   * @type ChatRoom
-   */
-  this.defaultRoom = new ChatRoom( 'lobby', this._adapter );
-
-  /**
-   * The current user in the chat.
-   * @type ChatUser
-   */
-  this.user = null;
-
-  /**
    * Chat rooms that are available.
    * A map of chat room name to ChatRoom object.
    * @type Map
    */
   this.rooms = {};
-}
 
-/**
- * Set the current user for the chat engine.
- *
- * @param {ChatUser} user
- *    The current user
- */
-Chat.prototype.setUser = function( user ) {
-  if( !user.id ) {
-    throw new Error( 'The "user" must implement the ChatUser interface' );
-  }
-  this.user = user;
-};
+  this._adapter.setUser( user );
+
+  /**
+   * The default room for the chat
+   * @type ChatRoom
+   */
+  this.defaultRoom = this.addRoom( 'lobby' );
+}
 
 /**
  * Send a message to the default chat room.
@@ -73,7 +65,7 @@ Chat.prototype.addRoom = function( name ) {
     throw new Error( 'Room with name "' + name + '" already exists' );
   }
 
-  var room = new ChatRoom( name, this );
+  var room = new ChatRoom( name, this._adapter );
   this.rooms[ name ] = room;
 
   this._adapter.addRoom( room );

@@ -1,18 +1,23 @@
 var ChatRoom = require( '../../src/core/ChatRoom.js' );
 var ChatUser = require( '../../src/core/ChatUser' );
 var ChatMessage = require( '../../src/core/ChatMessage' );
-var PlatformAdapter = require ( '../../src/core/PlatformAdapter' );
+var NullChatAdapter = require( '../../src/platforms/null/NullChatAdapter' );
 
 describe( 'ChatRoom', function() {
 
+  var emptyAdapter = null;
+
+  beforeEach( function() {
+    emptyAdapter = new NullChatAdapter();
+  } );
+
   it( 'should be possible to construct a ChatRoom with a name', function() {
     var name = 'test';
-    var room = new ChatRoom( name );
+    var room = new ChatRoom( name, emptyAdapter );
     expect( room.name ).toBe( name );
   } );
 
   it( 'should be possible to send a message', function() {
-    var emptyAdapter = new PlatformAdapter();
     spyOn( emptyAdapter, 'send' );
 
     var room = new ChatRoom( 'test-room', emptyAdapter );
@@ -24,7 +29,6 @@ describe( 'ChatRoom', function() {
   } );
 
   it( 'should ensure a message provides the required properties', function() {
-    var emptyAdapter = new PlatformAdapter();
 
     var room = new ChatRoom( 'test-room', emptyAdapter );
 
@@ -42,7 +46,7 @@ describe( 'ChatRoom', function() {
 
   it( 'should be possible for a user to join a room', function() {
     var userId = 'test-user';
-    var room = new ChatRoom();
+    var room = new ChatRoom( 'test-room', emptyAdapter );
     var user = new ChatUser( userId );
     room.join( user );
 
@@ -51,7 +55,7 @@ describe( 'ChatRoom', function() {
 
   it( 'should not be possible to add a user with the same id to a room twice', function() {
     var userId = 'test-user';
-    var room = new ChatRoom();
+    var room = new ChatRoom( 'test-room', emptyAdapter );
     var user = new ChatUser( userId );
     room.join( user );
 

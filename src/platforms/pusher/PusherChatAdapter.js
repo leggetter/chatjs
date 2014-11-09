@@ -1,3 +1,5 @@
+var Base64 = require( 'js-base64' ).Base64;
+
 /**
  * Pusher adapter for the chat engine.
  *
@@ -11,12 +13,21 @@ function PusherChatAdapter( pusher ) {
 
 PusherChatAdapter.prototype.addRoom = function( room ) {
   var roomName = roomNameToValidChannelName( room.name );
-  var channel = this._pusher.subscribe( roomName );
-  this._roomChannels[ roomName ] = channel;
+  setTimeout( function() {
+    var channel = this._pusher.subscribe( roomName );
+    this._roomChannels[ roomName ] = channel;
+  }.bind( this ), 1000 );
+};
+
+PusherChatAdapter.prototype.send = function( message ) {
+  console.log( 'PusherChatAdapter:send', message );
 };
 
 function roomNameToValidChannelName( name ) {
-  return name;
+  // ensure any name is allowed as a channel
+  // TODO: what about + sign?
+  name = Base64.encode( name );
+  return 'presence-' + name;
 }
 
 module.exports = PusherChatAdapter;

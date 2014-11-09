@@ -1,6 +1,6 @@
-<!-- <script src="../../build/chatjs.js"></script> -->
-<!-- <script src="../../build/PusherChatAdapter.js"></script> -->
-<!-- <script src="../../build/ConsoleChat.js"></script> -->
+<script src="../../build/chatjs.js"></script>
+<script src="../../build/PusherChatAdapter.js"></script>
+<script src="../../build/ConsoleChat.js"></script>
 
 <script src="https://js.pusher.com/2.2/pusher.min.js"></script>
 <script src="bower_components/pusher-js-client-auth/dist/pusher-js-client-auth.js"></script>
@@ -14,20 +14,11 @@
     authTransport: 'client',
     clientAuth: {
       key: '23ba7f92f3acb2cf179b',
-      secret: '4c60be1ef2e5f624fe97',
-      user_id: 'phil',
-      user_info: {
-        twitter: 'leggetter',
-        github: 'leggetter'
-      }
+      secret: '4c60be1ef2e5f624fe97'
     }
   } );
 
-  setTimeout( function() {
-    var channel = pusher.subscribe( 'presence-test' );
-  }, 1000 );
-
-  // var adapter = new PusherChatAdapter( pusher );
-  // var engine = new chatjs.Chat( adapter );
-  // var consoleChat = new ConsoleChat( engine );
+  var adapter = new PusherChatAdapter( pusher );
+  var engine = new chatjs.Chat( adapter );
+  var consoleChat = new ConsoleChat( engine );
 </script>

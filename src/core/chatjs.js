@@ -1,4 +1,5 @@
-var Chat = require( './Chat.js' );
 module.exports = {
-  Chat: Chat
+  Chat: require( './Chat' ),
+  ChatUser: require( './ChatUser' ),
+  ChatMessage: require( './ChatMessage' )
 };

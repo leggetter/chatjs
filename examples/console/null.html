@@ -2,7 +2,9 @@
 <script src="../../build/NullChatAdapter.js"></script>
 <script src="../../build/ConsoleChat.js"></script>
 <script>
+  var userId = prompt( 'What is your username for the chat session?' );
+  var user = new chatjs.ChatUser( userId );
   var adapter = new NullChatAdapter();
-  var engine = new chatjs.Chat( adapter );
+  var engine = new chatjs.Chat( user, adapter );
   var consoleChat = new ConsoleChat( engine );
 </script>
