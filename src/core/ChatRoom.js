@@ -1,7 +1,10 @@
+var ChatMessage = require( './ChatMessage' );
+var using = require('typester').using;
+
 /**
  * A chat room.
  */
-function ChatRoom( name ) {
+function ChatRoom( name, adapter ) {
   /**
    * The name of the room
    * @type String
@@ -14,6 +17,14 @@ function ChatRoom( name ) {
    * @type Map
    */
   this.users = {};
+
+  // TODO: messages?
+
+  /**
+   * @type PlatformAdapter
+   * @private
+   */
+  this._adapter = adapter;
 }
 
 /**
@@ -22,6 +33,10 @@ function ChatRoom( name ) {
  * @param {ChatMessage} message
  */
 ChatRoom.prototype.send = function( message ) {
+  using( arguments )
+    .verify( 'message' ).fulfills( ChatMessage );
+
+  this._adapter.send( message );
 };
 
 /**

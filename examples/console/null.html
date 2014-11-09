@@ -1,0 +1,8 @@
+<script src="../../build/chatjs.js"></script>
+<script src="../../build/NullChatAdapter.js"></script>
+<script src="../../build/ConsoleChat.js"></script>
+<script>
+  var adapter = new NullChatAdapter();
+  var engine = new chatjs.Chat( adapter );
+  var consoleChat = new ConsoleChat( engine );
+</script>

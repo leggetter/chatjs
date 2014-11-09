@@ -1,7 +1,7 @@
 var ChatRoom = require( './ChatRoom' );
 var ChatUser = require( './ChatUser' );
 var PlatformAdapter = require( './PlatformAdapter' );
-var Utils = require( './Utils' );
+var using = require( 'typester' ).using;
 
 /**
  * A chat engine.
@@ -12,9 +12,8 @@ var Utils = require( './Utils' );
  *    The hooks the core functionality up to a specific platform implemenation.
  */
 function Chat( adapter ) {
-  if( !Utils.fulfills( adapter, PlatformAdapter ) ) {
-    throw new Error( 'The "adapter" must implement the PlatformAdapter interface' );
-  }
+  using( arguments )
+    .verify( 'adapter' ).fulfills( PlatformAdapter );
 
   /**
    * @type PlatformAdapter
@@ -25,7 +24,7 @@ function Chat( adapter ) {
    * The default room for the chat
    * @type ChatRoom
    */
-  this.defaultRoom = new ChatRoom();
+  this.defaultRoom = new ChatRoom( 'lobby', this._adapter );
 
   /**
    * The current user in the chat.
@@ -74,7 +73,7 @@ Chat.prototype.addRoom = function( name ) {
     throw new Error( 'Room with name "' + name + '" already exists' );
   }
 
-  var room = new ChatRoom( name );
+  var room = new ChatRoom( name, this );
   this.rooms[ name ] = room;
 
   this._adapter.addRoom( room );

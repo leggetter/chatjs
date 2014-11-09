@@ -11,26 +11,30 @@
 function ChatMessage( userId, text, sentTime ) {
   sentTime = sentTime || new Date();
 
-  /**
-   * Unique ID of the user sending the message
-   *
-   * @type String
-   */
   this.userId = userId;
-
-  /**
-   * Message text
-   *
-   * @type String
-   */
   this.text = text;
-
-  /**
-   * Time the message was sent.
-   *
-   * @type Date
-   */
   this.sentTime = sentTime;
 }
+
+/**
+ * Unique ID of the user sending the message
+ *
+ * @type String
+ */
+ChatMessage.prototype.userId = '';
+
+/**
+ * Message text
+ *
+ * @type String
+ */
+ChatMessage.prototype.text = '';
+
+/**
+ * Time the message was sent.
+ *
+ * @type Date
+ */
+ChatMessage.prototype.sentTime = new Date();
 
 module.exports = ChatMessage;

@@ -1,5 +1,7 @@
 var ChatRoom = require( '../../src/core/ChatRoom.js' );
 var ChatUser = require( '../../src/core/ChatUser' );
+var ChatMessage = require( '../../src/core/ChatMessage' );
+var PlatformAdapter = require ( '../../src/core/PlatformAdapter' );
 
 describe( 'ChatRoom', function() {
 
@@ -10,8 +12,32 @@ describe( 'ChatRoom', function() {
   } );
 
   it( 'should be possible to send a message', function() {
-    var room = new ChatRoom();
-    expect( room.send ).toBeDefined();
+    var emptyAdapter = new PlatformAdapter();
+    spyOn( emptyAdapter, 'send' );
+
+    var room = new ChatRoom( 'test-room', emptyAdapter );
+    var message = new ChatMessage( 'test-user', 'some text' );
+
+    room.send( message );
+
+    expect( emptyAdapter.send ).toHaveBeenCalledWith( message );
+  } );
+
+  it( 'should ensure a message provides the required properties', function() {
+    var emptyAdapter = new PlatformAdapter();
+
+    var room = new ChatRoom( 'test-room', emptyAdapter );
+
+    var sendNullObject = function() {
+      room.send( null );
+    };
+
+    var sendEmptyObject = function() {
+      room.send( {} );
+    };
+
+    expect( sendNullObject ).toThrow();
+    expect( sendEmptyObject ).toThrow();
   } );
 
   it( 'should be possible for a user to join a room', function() {
