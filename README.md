@@ -32,7 +32,7 @@ chat.send( message );
 </script>
 ```
 
-## How to integrate with a Realtime Platform
+## Realtime Platform Integration
 
 *This section is a work in progress*
 
@@ -44,11 +44,23 @@ The core chat objects include:
 * `ChatUser`
 * `ChatMessage`
 
-## How to integrate with a UI framework
+### Existing Realtime Platform Integrations
+
+You can find existing integrations in the `src/platforms` directory.
+
+*Presently there is only a [Pusher](http://pusher.com) adapter and associated example.*
+
+## UI Framework Integration
 
 *This section is a work in progress*
 
 As with the realtime framework the UI framework should interact with a set of core objects and receive information from those core object when building an manipulating the UI.
+
+### Existing UI Framework Integration
+
+UI framework integration examples should be in `src/ui-frameworks`.
+
+*There are presently no UI framework examples*
 
 ## Todo
 
@@ -59,6 +71,7 @@ As with the realtime framework the UI framework should interact with a set of co
 * Get list of rooms from the chat engine
 * Get list of messages from a chat room
 * Set user status e.g. away, busy, online, offline
+* Add JSDoc for core object APIs
 
 ### Under Consideration
 
