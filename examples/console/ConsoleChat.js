@@ -1,5 +1,3 @@
-var ChatMessage = require( '../../core/ChatMessage' );
-
 function ConsoleChat( chat ) {
   this.chat = chat;
 
@@ -9,7 +7,7 @@ function ConsoleChat( chat ) {
 }
 
 ConsoleChat.prototype.send = function( text ) {
-  var message = new ChatMessage( this.chat.user.id, text );
+  var message = new chatjs.ChatMessage( this.chat.user.id, text );
   this.chat.send( message );
 };
 
@@ -18,4 +16,4 @@ ConsoleChat.prototype.newMessage = function( message ) {
   console.log( '%s said "%s" at %s', message.userId, message.text, message.sentTime );
 };
 
-module.exports = ConsoleChat;
+window.ConsoleChat = ConsoleChat;
